@@ -1,0 +1,808 @@
+{
+  "last_node_id": 98,
+  "last_link_id": 284,
+  "nodes": [
+    {
+      "id": 82,
+      "type": "LoraLoader",
+      "pos": [
+        -1005,
+        605
+      ],
+      "size": {
+        "0": 315,
+        "1": 126
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 260
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 259
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            267
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            254,
+            255,
+            256
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "title": "Select your LoRA",
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "widgets_values": [
+        "protogenv2-medium.safetensors",
+        0.8,
+        1
+      ]
+    },
+    {
+      "id": 12,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -1386,
+        601
+      ],
+      "size": [
+        342.3578851602251,
+        128.10059595300174
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            260
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            259
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            272
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "title": "Select Base Model",
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "yiffymix_v34.safetensors"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "pos": [
+        -1381,
+        772
+      ],
+      "size": [
+        692.5248819500617,
+        106
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            268
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        512,
+        512,
+        1
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -609,
+        757
+      ],
+      "size": {
+        "0": 422.84503173828125,
+        "1": 164.31304931640625
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 256,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            62
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Base Positive",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "detailed background, sharp background, absurd res, high res, Detailed face, detailed eyes, 2d, cycles, blender, depth of field, proper anatomy, connected limbs, proper proportions, coherent background, accurate limbs, 2 ears, perfect fingers, perfect hands"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -605,
+        812
+      ],
+      "size": {
+        "0": 425.27801513671875,
+        "1": 180.6060791015625
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 255
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            282
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Base Negative",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "text, watermark, bad_fingers, bad_hands, bad_anatomy, low_effort, bad_features, misshaped_legs, incorrect poses, paint, blurry, swirl, circle, extra limbs, missing limbs, inaccurate shading, computer, innacurate clothing, low_quality, medium_quality, pixelated,"
+      ]
+    },
+    {
+      "id": 93,
+      "type": "Reroute",
+      "pos": [
+        -378,
+        478
+      ],
+      "size": [
+        671.4214921431108,
+        26
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 282
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "CONDITIONING",
+          "links": [
+            271
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 88,
+      "type": "Reroute",
+      "pos": [
+        -658,
+        384
+      ],
+      "size": [
+        1005.9669466885653,
+        26
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 267,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "MODEL",
+          "links": [
+            265
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 92,
+      "type": "Reroute",
+      "pos": [
+        -672,
+        324
+      ],
+      "size": [
+        1027.2396739612925,
+        26
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 268,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "LATENT",
+          "links": [
+            269
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        714,
+        595
+      ],
+      "size": [
+        562.1483140425248,
+        46
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 283
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 273
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            284
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Decoder",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 97,
+      "type": "SaveImage",
+      "pos": [
+        718,
+        681
+      ],
+      "size": [
+        553.2578959819698,
+        301.1053918255261
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 284
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "StableDiff"
+      ]
+    },
+    {
+      "id": 94,
+      "type": "Reroute",
+      "pos": [
+        -987,
+        1016
+      ],
+      "size": [
+        1680.6009399414063,
+        26
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 272
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "VAE",
+          "links": [
+            273
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 39,
+      "type": "ConditioningCombine",
+      "pos": [
+        30,
+        619
+      ],
+      "size": [
+        228.39999389648438,
+        59.30202829349594
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning_1",
+          "type": "CONDITIONING",
+          "link": 62
+        },
+        {
+          "name": "conditioning_2",
+          "type": "CONDITIONING",
+          "link": 278
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            63
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "Combiner",
+      "properties": {
+        "Node name for S&R": "ConditioningCombine"
+      }
+    },
+    {
+      "id": 3,
+      "type": "KSampler",
+      "pos": [
+        387,
+        593
+      ],
+      "size": [
+        305.5119504061612,
+        395.95872913707376
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 265
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 63
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 271
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 269
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            283
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Generator",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        104417193264757,
+        "randomize",
+        48,
+        30,
+        "lms",
+        "ddim_uniform",
+        1
+      ]
+    },
+    {
+      "id": 98,
+      "type": "Note",
+      "pos": [
+        30,
+        716
+      ],
+      "size": [
+        227.37203645068132,
+        149.1950722353996
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "This node combines both the Base and Custom Positive prompts. Simply describe your character and the setting in the Custom Positive area, as the Base Positive is already filled out for you"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 40,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -331,
+        618
+      ],
+      "size": [
+        332.25948471553784,
+        245.79555009477042
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 254
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            278
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "Custom Positive",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      62,
+      6,
+      0,
+      39,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      63,
+      39,
+      0,
+      3,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      254,
+      82,
+      1,
+      40,
+      0,
+      "CLIP"
+    ],
+    [
+      255,
+      82,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      256,
+      82,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      259,
+      12,
+      1,
+      82,
+      1,
+      "CLIP"
+    ],
+    [
+      260,
+      12,
+      0,
+      82,
+      0,
+      "MODEL"
+    ],
+    [
+      265,
+      88,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      267,
+      82,
+      0,
+      88,
+      0,
+      "*"
+    ],
+    [
+      268,
+      5,
+      0,
+      92,
+      0,
+      "*"
+    ],
+    [
+      269,
+      92,
+      0,
+      3,
+      3,
+      "LATENT"
+    ],
+    [
+      271,
+      93,
+      0,
+      3,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      272,
+      12,
+      2,
+      94,
+      0,
+      "*"
+    ],
+    [
+      273,
+      94,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      278,
+      40,
+      0,
+      39,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      282,
+      7,
+      0,
+      93,
+      0,
+      "*"
+    ],
+    [
+      283,
+      3,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      284,
+      8,
+      0,
+      97,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "LOADERS",
+      "bounding": [
+        -1396,
+        528,
+        720,
+        424
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "BASE PROMPTS",
+      "bounding": [
+        -636,
+        674,
+        198,
+        153
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "SAMPLING AND DECODING",
+      "bounding": [
+        379,
+        519,
+        914,
+        476
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "CUSTOM PROMPT",
+      "bounding": [
+        -343,
+        544,
+        615,
+        326
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
